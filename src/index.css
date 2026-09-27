@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cream: #fbf5ef;
+  --rose: #b4123f;
+  --gold: #c98a2d;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-cream text-plum-900 antialiased;
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+::selection {
+  background: rgba(180, 18, 63, 0.85);
+  color: #fff;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #d9c3cf;
+  border-radius: 8px;
+  border: 2px solid #fbf5ef;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b795a6;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Typography helpers */
+.font-display {
+  letter-spacing: -0.015em;
+}
+.heading-xl {
+  @apply font-display text-4xl md:text-5xl font-semibold leading-[1.08] tracking-tight;
+}
+.heading-lg {
+  @apply font-display text-3xl md:text-4xl font-semibold leading-tight tracking-tight;
+}
+.heading-md {
+  @apply font-display text-2xl md:text-3xl font-semibold tracking-tight;
+}
+.eyebrow {
+  @apply text-[11px] font-semibold uppercase tracking-[0.22em];
+}
+
+/* Buttons */
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none select-none;
+}
+.btn-primary {
+  @apply btn bg-rose-600 text-white shadow-soft hover:bg-rose-700 hover:shadow-lift active:scale-[0.98];
+}
+.btn-dark {
+  @apply btn bg-plum-800 text-cream hover:bg-plum-900 shadow-soft active:scale-[0.98];
+}
+.btn-outline {
+  @apply btn border border-plum-200 bg-white/70 text-plum-800 hover:border-rose-300 hover:text-rose-600 hover:bg-white;
+}
+.btn-ghost {
+  @apply btn text-plum-700 hover:bg-plum-100/60;
+}
+.btn-gold {
+  @apply btn bg-gold text-white shadow-soft hover:bg-gold-deep active:scale-[0.98];
+}
+.btn-sm {
+  @apply px-3.5 py-1.5 text-sm;
+}
+.btn-md {
+  @apply px-5 py-2.5 text-sm;
+}
+.btn-lg {
+  @apply px-7 py-3 text-base;
+}
+
+/* Inputs */
+.input {
+  @apply w-full rounded-xl border border-plum-200 bg-white px-3.5 py-2.5 text-sm text-plum-900 placeholder:text-plum-300 transition focus:outline-none focus:border-rose-400 focus:ring-2 focus:ring-rose-100 disabled:opacity-60;
+}
+.label {
+  @apply mb-1.5 block text-xs font-semibold uppercase tracking-wider text-plum-500;
+}
+.field-error {
+  @apply mt-1 text-xs font-medium text-rose-600;
+}
+
+/* Cards */
+.card {
+  @apply rounded-2xl border border-plum-100 bg-white shadow-soft;
+}
+
+.chip {
+  @apply inline-flex items-center gap-1 rounded-full border border-plum-200 bg-white px-3 py-1 text-xs font-semibold text-plum-700 transition hover:border-rose-300;
+}
+.chip-active {
+  @apply border-rose-500 bg-rose-600 text-white hover:border-rose-600 hover:text-white;
+}
+
+.badge {
+  @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider;
+}
+
+.skeleton {
+  @apply relative overflow-hidden rounded-2xl bg-plum-100/70;
+}
+.skeleton::after {
+  content: '';
+  @apply absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/60 to-transparent;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Reduced motion: neutralize CSS animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

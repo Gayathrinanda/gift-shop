@@ -1,0 +1,9 @@
+node_modules
+dist
+.DS_Store
+*.local
+
+# Freebuff local state
+.freebuff/
+# TS build artifacts
+*.tsbuildinfo
