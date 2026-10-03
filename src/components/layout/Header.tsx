@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Heart, Search, ShoppingBag, User, Menu, X, MapPin, ChevronDown, Flower2, Cake, Gift, Sparkles, Leaf, Star } from 'lucide-react'
-import { CATEGORIES } from '../../data/categories'
+import { Heart, Search, ShoppingBag, User, Menu, X, MapPin, ChevronDown, Flower2, Cake, Gift, Sparkles, Leaf, Star, Camera } from 'lucide-react'
+import { useActiveCategories } from '../../store/categoryStatus'
 import { useCart, cartCount } from '../../store/cart'
 import { useWishlist } from '../../store/wishlist'
 import { useAuth } from '../../store/auth'
@@ -13,16 +13,17 @@ import { useMotionSafe } from '../../lib/motion'
 
 function Logo({ compact }: { compact?: boolean }) {
   return (
-    <Link to="/" className="flex items-center gap-2.5" aria-label="Velvette home">
+    <Link to="/" className="flex items-center gap-2.5" aria-label="MemoriesCatcher home">
       <motion.span
-        className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-600 font-display text-lg font-bold text-white shadow-soft"
+        className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-600 text-white shadow-soft"
         whileHover={{ rotate: -8, scale: 1.05 }}
+        aria-hidden
       >
-        V
+        <Camera size={18} strokeWidth={2.25} />
       </motion.span>
-      <span className="font-display text-[22px] font-bold tracking-tight text-plum-900">
-        Velvette
-        {!compact && <span className="ml-1.5 hidden text-[10px] font-sans font-bold uppercase tracking-[0.28em] text-gold lg:inline">Gifting</span>}
+      <span className="font-display text-[16px] font-bold tracking-tight text-plum-900 sm:text-[18px] md:text-[21px]">
+        Memories<span className="text-rose-600">Catcher</span>
+        {!compact && <span className="ml-1.5 hidden text-[10px] font-sans font-bold uppercase tracking-[0.28em] text-gold xl:inline">Gifting</span>}
       </span>
     </Link>
   )
@@ -44,6 +45,11 @@ export default function Header() {
   const setCartOpen = useUi((s) => s.setCartOpen)
   const setSearchOpen = useUi((s) => s.setSearchOpen)
   const motionSafe = useMotionSafe()
+  const activeCategories = useActiveCategories()
+  const activeSlugs = new Set<string>(activeCategories.map((c) => c.slug))
+  const navLinks = NAV_LINKS.filter((l) =>
+    l.to.startsWith('/category/') ? activeSlugs.has(l.to.slice('/category/'.length)) : true,
+  )
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -75,7 +81,10 @@ export default function Header() {
               <Link to="/admin/login" className="font-semibold text-gold-light transition hover:text-white">
                 Admin
               </Link>
-              <Link to="/category/same-day" className="font-semibold text-gold-light transition hover:text-white">
+              <Link
+                to={activeSlugs.has('same-day') ? '/category/same-day' : '/shop?sameday=1'}
+                className="font-semibold text-gold-light transition hover:text-white"
+              >
                 Same-Day Delivery
               </Link>
             </div>
@@ -83,7 +92,7 @@ export default function Header() {
           <div className="sr-only">Demo store announcement bar</div>
         </div>
 
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 md:px-6">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-4 md:gap-4 md:px-6">
           <div className="flex items-center gap-3">
             <button
               className="rounded-xl p-2 text-plum-700 transition hover:bg-plum-100 lg:hidden"
@@ -97,7 +106,7 @@ export default function Header() {
 
           {/* desktop nav */}
           <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
-            {NAV_LINKS.map((l) => (
+            {navLinks.map((l) => (
               <NavLink
                 key={l.to}
                 to={l.to}
@@ -126,7 +135,7 @@ export default function Header() {
                     className="absolute left-1/2 top-full z-50 w-[680px] -translate-x-1/2 pt-3"
                   >
                     <div className="grid grid-cols-3 gap-1 rounded-3xl border border-plum-100 bg-white p-4 shadow-lift">
-                      {CATEGORIES.slice(0, 12).map((c) => (
+                      {activeCategories.slice(0, 12).map((c) => (
                         <Link
                           key={c.slug}
                           to={`/category/${c.slug}`}
@@ -222,7 +231,7 @@ export default function Header() {
               </div>
               <nav className="flex-1 overflow-y-auto p-4" aria-label="Mobile">
                 <div className="space-y-1">
-                  {NAV_LINKS.map((l) => (
+                  {navLinks.map((l) => (
                     <Link key={l.to} to={l.to} onClick={() => setMobileOpen(false)} className="block rounded-xl px-4 py-3 font-semibold text-plum-800 transition hover:bg-plum-100">
                       {l.label}
                     </Link>
@@ -230,7 +239,7 @@ export default function Header() {
                 </div>
                 <p className="eyebrow mt-6 mb-2 px-4 text-plum-400">Categories</p>
                 <div className="space-y-1">
-                  {CATEGORIES.map((c) => (
+                  {activeCategories.map((c) => (
                     <Link
                       key={c.slug}
                       to={`/category/${c.slug}`}

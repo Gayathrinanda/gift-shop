@@ -20,7 +20,7 @@ export const BANNERS: Banner[] = [
     cta: 'Explore Anniversary', link: '/category/anniversary', image: '', active: true, order: 2, tone: 'plum',
   },
   {
-    id: 'bnr-3', title: 'Velvette Signature Hampers',
+    id: 'bnr-3', title: 'MemoriesCatcher Signature Hampers',
     subtitle: 'Gourmet trays, candles and keepsakes — curated like only we can.',
     cta: 'View Hampers', link: '/category/hampers', image: '', active: true, order: 3, tone: 'gold',
   },

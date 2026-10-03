@@ -2,6 +2,7 @@ export type CategorySlug =
   | 'flowers' | 'bouquets' | 'cakes' | 'chocolates' | 'plants' | 'hampers'
   | 'personalized' | 'birthday' | 'anniversary' | 'wedding' | 'corporate'
   | 'same-day' | 'new-arrivals' | 'best-sellers' | 'combos'
+  | 'fashion-gifts' | 'balloons' | 'gourmet' | 'toys-games'
 
 export interface Category {
   slug: CategorySlug
@@ -13,6 +14,8 @@ export interface Category {
   featured?: boolean
   animation: 'bouquet' | 'giftbox' | 'cake' | 'personalize' | 'plant' | 'sparkle' | 'heart' | 'calendar' | 'star' | 'combo'
   subcategories: string[]
+  /** Storefront visibility. Missing = active (back-compat). Managed from Admin → Categories. */
+  active?: boolean
 }
 
 export interface ProductVariant {

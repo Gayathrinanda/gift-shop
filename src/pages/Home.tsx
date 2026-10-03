@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight, ChevronLeft, ChevronRight, Sparkles, Truck, Leaf, Star, Quote, Clock, Gift } from 'lucide-react'
-import { CATEGORIES } from '../data/categories'
+import { useActiveCategories, toStoreLink } from '../store/categoryStatus'
 import { useCatalog } from '../store/products'
 import { useBanners } from '../store/merch'
 import ProductCard from '../components/ui/ProductCard'
@@ -34,7 +34,7 @@ const HERO_SLIDES = [
   {
     eyebrow: 'Curated abundance',
     title: 'One hamper.\nA thousand thank-yous.',
-    sub: 'Gourmet trays, candles and keepsakes, layered like only Velvette can.',
+    sub: 'Gourmet trays, candles and keepsakes, layered like only MemoriesCatcher can.',
     cta: 'View Hampers',
     link: '/category/hampers',
     image: 'photo-1513885535751-8b9238bd345a',
@@ -110,7 +110,7 @@ function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.45 }}
               >
-                <Link to={slide.link} className="btn bg-white px-7 py-3 text-plum-900 shadow-lift hover:bg-rose-50">
+                <Link to={toStoreLink(slide.link)} className="btn bg-white px-7 py-3 text-plum-900 shadow-lift hover:bg-rose-50">
                   {slide.cta} <ArrowRight size={16} />
                 </Link>
                 <Link to="/shop" className="btn border border-white/40 px-7 py-3 text-white backdrop-blur transition hover:bg-white/10">
@@ -154,7 +154,7 @@ function SectionHeading({ eyebrow, title, sub, link, linkLabel }: { eyebrow: str
         {sub && <p className="mt-2 max-w-xl text-sm text-plum-500">{sub}</p>}
       </div>
       {link && (
-        <Link to={link} className="group flex items-center gap-1.5 text-sm font-bold text-rose-700 hover:text-rose-800">
+        <Link to={toStoreLink(link)} className="group flex items-center gap-1.5 text-sm font-bold text-rose-700 hover:text-rose-800">
           {linkLabel ?? 'View all'}
           <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
         </Link>
@@ -180,7 +180,8 @@ export default function Home() {
   const bestSellers = products.filter((p) => p.bestSeller).slice(0, 8)
   const newArrivals = products.filter((p) => p.newArrival).slice(0, 8)
   const trending = products.filter((p) => p.featured && !p.bestSeller).slice(0, 8)
-  const categories = CATEGORIES.filter((c) => c.featured).slice(0, 6)
+  const activeCategories = useActiveCategories()
+  const categories = activeCategories.slice(0, 6)
 
   return (
     <div>
@@ -256,7 +257,7 @@ export default function Home() {
           {OCCASIONS.map((o, i) => (
             <FadeIn key={o.name} delay={i * 0.04}>
               <Link
-                to={o.link}
+                to={toStoreLink(o.link)}
                 className={`group flex items-center gap-3 rounded-2xl bg-gradient-to-br ${o.tone} p-4 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lift`}
               >
                 <span className="text-2xl transition-transform duration-300 group-hover:scale-125">{o.icon}</span>
@@ -273,7 +274,7 @@ export default function Home() {
           {banners.slice(0, 4).map((b, i) => (
             <FadeIn key={b.id} delay={i * 0.06}>
               <Link
-                to={b.link}
+                to={toStoreLink(b.link)}
                 className={`group relative flex h-52 items-center overflow-hidden rounded-3xl p-8 shadow-soft transition hover:shadow-lift ${
                   b.tone === 'rose' ? 'bg-gradient-to-br from-rose-600 to-rose-800' :
                   b.tone === 'plum' ? 'bg-gradient-to-br from-plum-700 to-plum-900' :
@@ -282,7 +283,7 @@ export default function Home() {
                 }`}
               >
                 <div className="relative z-10 max-w-[70%]">
-                  <p className="eyebrow text-white/70">Velvette special</p>
+                  <p className="eyebrow text-white/70">MemoriesCatcher special</p>
                   <h3 className="mt-1 font-display text-2xl font-bold text-white">{b.title}</h3>
                   <p className="mt-1.5 text-sm text-white/85">{b.subtitle}</p>
                   <span className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-white px-5 py-2 text-xs font-bold text-plum-900 transition group-hover:gap-3">
@@ -347,7 +348,7 @@ export default function Home() {
           {[
             { name: 'Rhea S.', text: 'The roses arrived still cool from the farm. My wife cried — happy tears. The packaging felt like unwrapping a luxury brand.', rating: 5 },
             { name: 'Ananya P.', text: 'Best truffle cake in the city. Moist, dark, not too sweet. I have ordered it twice in one month and I regret nothing.', rating: 5 },
-            { name: 'Arjun D.', text: 'She recognised the date on the star map instantly. Gallery-level quality. Velvette is my default gift shop now.', rating: 5 },
+            { name: 'Arjun D.', text: 'She recognised the date on the star map instantly. Gallery-level quality. MemoriesCatcher is my default gift shop now.', rating: 5 },
           ].map((t, i) => (
             <FadeIn key={t.name} delay={i * 0.07}>
               <figure className="card h-full p-6">

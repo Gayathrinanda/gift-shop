@@ -1,27 +1,14 @@
 import type { Category, CategorySlug } from './types'
 import { unsplash } from './images'
 
+/**
+ * Storefront catalog structure.
+ * `active: true`  → shown in customer-facing category navigation.
+ * `active: false` → kept in the system (admin can reactivate); hidden from customers.
+ * No category is ever deleted — status is the only thing that changes.
+ */
 export const CATEGORIES: Category[] = [
-  {
-    slug: 'flowers',
-    name: 'Flowers',
-    tagline: 'Hand-tied, farm-fresh stems',
-    description: 'Farm-fresh flowers arranged by our master florists, from single-stem elegance to lush blooms.',
-    image: unsplash('photo-1490750967868-88aa4486c946', 900),
-    featured: true,
-    animation: 'bouquet',
-    subcategories: ['Roses', 'Lilies', 'Orchids', 'Mixed Stems', 'Gerberas'],
-  },
-  {
-    slug: 'bouquets',
-    name: 'Bouquets',
-    tagline: 'Artfully gathered, beautifully wrapped',
-    description: 'Signature bouquets wrapped in premium paper with satin ribbon finishes.',
-    image: unsplash('photo-1508610048659-a06b669e3321', 900),
-    featured: true,
-    animation: 'bouquet',
-    subcategories: ['Rose Bouquets', 'Seasonal Bouquets', 'Exotic Bouquets', 'Bud Vases'],
-  },
+  // ─── ACTIVE ────────────────────────────────────────────────
   {
     slug: 'cakes',
     name: 'Cakes',
@@ -31,15 +18,17 @@ export const CATEGORIES: Category[] = [
     featured: true,
     animation: 'cake',
     subcategories: ['Cream', 'Chocolate', 'Fruit', 'Cupcakes', 'Photo Cakes'],
+    active: true,
   },
   {
-    slug: 'chocolates',
-    name: 'Chocolates',
-    tagline: 'Single-origin indulgence',
-    description: 'Hand-tempered couverture chocolates and cocoa-rich gift boxes.',
-    image: unsplash('photo-1481391319762-47dff72954d9', 900),
-    animation: 'giftbox',
-    subcategories: ['Truffles', 'Bars', 'Boxes', 'Sugar-free'],
+    slug: 'personalized',
+    name: 'Personalized Gifts',
+    tagline: 'Made with their name on it',
+    description: 'Keepsakes printed, engraved or embroidered with your message.',
+    image: unsplash('photo-1512909006721-3d6018887383', 900),
+    animation: 'personalize',
+    subcategories: ['Mugs', 'Cushions', 'Lamps', 'Name Frames'],
+    active: true,
   },
   {
     slug: 'plants',
@@ -49,6 +38,7 @@ export const CATEGORIES: Category[] = [
     image: unsplash('photo-1416879595882-3373a0480b5b', 900),
     animation: 'plant',
     subcategories: ['Indoor', 'Flowering', 'Succulents', 'Air-purifying'],
+    active: true,
   },
   {
     slug: 'hampers',
@@ -59,15 +49,81 @@ export const CATEGORIES: Category[] = [
     featured: true,
     animation: 'giftbox',
     subcategories: ['Celebration Hampers', 'Gourmet', 'Festive', 'Mini Hampers'],
+    active: true,
   },
   {
-    slug: 'personalized',
-    name: 'Personalized Gifts',
-    tagline: 'Made with their name on it',
-    description: 'Keepsakes printed, engraved or embroidered with your message.',
-    image: unsplash('photo-1512909006721-3d6018887383', 900),
-    animation: 'personalize',
-    subcategories: ['Mugs', 'Cushions', 'Lamps', 'Name Frames'],
+    slug: 'fashion-gifts',
+    name: 'Fashion Gifts',
+    tagline: 'Gifts they can wear',
+    description: 'Bags, watches and accessories chosen to be worn, carried and shown off.',
+    image: unsplash('photo-1483985988355-763728e1935b', 900),
+    animation: 'sparkle',
+    subcategories: ['Bags', 'Accessories', 'Watches', 'Fashion Gift Sets'],
+    active: true,
+  },
+  {
+    slug: 'balloons',
+    name: 'Balloons',
+    tagline: 'Float their day higher',
+    description: 'Foil numbers, helium bouquets and themed balloon sets for every celebration.',
+    image: unsplash('photo-1530103862676-de8c9debad1d', 900),
+    animation: 'star',
+    subcategories: ['Birthday Balloons', 'Balloon Bouquets', 'Foil Balloons', 'Celebration Balloons'],
+    active: true,
+  },
+  {
+    slug: 'chocolates',
+    name: 'Chocolates',
+    tagline: 'Single-origin indulgence',
+    description: 'Hand-tempered couverture chocolates and cocoa-rich gift boxes.',
+    image: unsplash('photo-1481391319762-47dff72954d9', 900),
+    animation: 'giftbox',
+    subcategories: ['Truffles', 'Bars', 'Boxes', 'Sugar-free'],
+    active: true,
+  },
+  {
+    slug: 'gourmet',
+    name: 'Gourmet',
+    tagline: 'Small-batch, big flavour',
+    description: 'Artisan snacks, dry-fruit trays and gourmet spreads for the foodie in your list.',
+    image: unsplash('photo-1504674900247-0877df9cc836', 900),
+    animation: 'giftbox',
+    subcategories: ['Gourmet Food', 'Snacks', 'Dry Fruits', 'Gourmet Gift Sets'],
+    active: true,
+  },
+  {
+    slug: 'toys-games',
+    name: 'Toys & Games',
+    tagline: 'Play, together',
+    description: 'Board games, soft toys and educational picks that beat another screen hour.',
+    image: unsplash('photo-1558060370-d644479cb6f7', 900),
+    animation: 'combo',
+    subcategories: ['Kids Toys', 'Board Games', 'Educational Toys', 'Soft Toys'],
+    active: true,
+  },
+
+  // ─── INACTIVE (kept in the system — reactivate anytime) ───
+  {
+    slug: 'flowers',
+    name: 'Flowers',
+    tagline: 'Hand-tied, farm-fresh stems',
+    description: 'Farm-fresh flowers arranged by our master florists, from single-stem elegance to lush blooms.',
+    image: unsplash('photo-1490750967868-88aa4486c946', 900),
+    featured: true,
+    animation: 'bouquet',
+    subcategories: ['Roses', 'Lilies', 'Orchids', 'Mixed Stems', 'Gerberas'],
+    active: false,
+  },
+  {
+    slug: 'bouquets',
+    name: 'Bouquets',
+    tagline: 'Artfully gathered, beautifully wrapped',
+    description: 'Signature bouquets wrapped in premium paper with satin ribbon finishes.',
+    image: unsplash('photo-1508610048659-a06b669e3321', 900),
+    featured: true,
+    animation: 'bouquet',
+    subcategories: ['Rose Bouquets', 'Seasonal Bouquets', 'Exotic Bouquets', 'Bud Vases'],
+    active: false,
   },
   {
     slug: 'birthday',
@@ -77,6 +133,7 @@ export const CATEGORIES: Category[] = [
     image: unsplash('photo-1464349095431-e9a21285b5f3', 900),
     animation: 'cake',
     subcategories: ['Cakes & Flowers', 'Combos', 'Trending'],
+    active: false,
   },
   {
     slug: 'anniversary',
@@ -86,6 +143,7 @@ export const CATEGORIES: Category[] = [
     image: unsplash('photo-1490750967868-88aa4486c946', 900),
     animation: 'heart',
     subcategories: ['Roses & More', 'Keepsakes', 'Experience Boxes'],
+    active: false,
   },
   {
     slug: 'wedding',
@@ -95,6 +153,7 @@ export const CATEGORIES: Category[] = [
     image: unsplash('photo-1519741497674-611481863552', 900),
     animation: 'sparkle',
     subcategories: ['Jaimala', 'Decor', 'Return Gifts'],
+    active: false,
   },
   {
     slug: 'corporate',
@@ -104,6 +163,7 @@ export const CATEGORIES: Category[] = [
     image: unsplash('photo-1549465220-1a8b9238cd48', 900),
     animation: 'star',
     subcategories: ['Desk Gifts', 'Premium Kits', 'Bulk Orders'],
+    active: false,
   },
   {
     slug: 'same-day',
@@ -113,15 +173,17 @@ export const CATEGORIES: Category[] = [
     image: unsplash('photo-1549465220-1a8b9238cd48', 900),
     animation: 'calendar',
     subcategories: ['Under 2 hrs', 'Today'],
+    active: false,
   },
   {
     slug: 'new-arrivals',
     name: 'New Arrivals',
     tagline: 'Fresh this week',
-    description: 'The newest additions to the Velvette atelier.',
+    description: 'The newest additions to the MemoriesCatcher atelier.',
     image: unsplash('photo-1512909006721-3d6018887383', 900),
     animation: 'star',
     subcategories: [],
+    active: false,
   },
   {
     slug: 'best-sellers',
@@ -131,6 +193,7 @@ export const CATEGORIES: Category[] = [
     image: unsplash('photo-1513201099705-a9746e1e201f', 900),
     animation: 'sparkle',
     subcategories: [],
+    active: false,
   },
   {
     slug: 'combos',
@@ -140,6 +203,7 @@ export const CATEGORIES: Category[] = [
     image: unsplash('photo-1549465220-1a8b9238cd48', 900),
     animation: 'combo',
     subcategories: ['Flower + Cake', 'Flower + Chocolate', 'Hamper + Card'],
+    active: false,
   },
 ]
 

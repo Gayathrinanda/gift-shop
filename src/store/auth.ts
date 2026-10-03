@@ -47,7 +47,7 @@ export const useAuth = create<AuthState>()(
         }
         localStorage.setItem('velvette-users-v1', JSON.stringify([...users, newUser]))
         set({ user: newUser })
-        return { ok: true, message: `Account created — welcome to Velvette, ${name.split(' ')[0]}!` }
+        return { ok: true, message: `Account created — welcome to MemoriesCatcher, ${name.split(' ')[0]}!` }
       },
       signOut: () => set({ user: null }),
       updateProfile: (patch) => {

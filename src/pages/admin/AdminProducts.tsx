@@ -297,7 +297,7 @@ export function AdminProductForm() {
       stock: 0,
       tags: [],
       occasions: [],
-      highlights: ['Handpicked by the Velvette atelier', 'Demo product created via admin console'],
+      highlights: ['Handpicked by the MemoriesCatcher atelier', 'Demo product created via admin console'],
       images: [],
       createdAt: new Date().toISOString().slice(0, 10),
     }

@@ -1,7 +1,8 @@
 import { useMemo, useState, useEffect } from 'react'
 import { useSearchParams, Link, useParams } from 'react-router-dom'
 import { SlidersHorizontal, X, ChevronDown } from 'lucide-react'
-import { CATEGORIES, CATEGORY_MAP } from '../data/categories'
+import { CATEGORY_MAP } from '../data/categories'
+import { useActiveCategories, useCategoryActive } from '../store/categoryStatus'
 import { useCatalog } from '../store/products'
 import ProductCard from '../components/ui/ProductCard'
 import { SkeletonGrid, EmptyState } from '../components/ui/misc'
@@ -25,6 +26,8 @@ export default function Shop({ categorySlug: categorySlugProp }: { categorySlug?
   const motionSafe = useMotionSafe()
 
   const category = categorySlug ? CATEGORY_MAP[categorySlug as CategorySlug] : undefined
+  const activeCategories = useActiveCategories()
+  const categoryActive = useCategoryActive(categorySlug)
 
   // Initialize + URL-sync filters
   const filters: Filters = useMemo(() => {
@@ -98,7 +101,7 @@ export default function Shop({ categorySlug: categorySlugProp }: { categorySlug?
           <Link to="/shop" className={`block rounded-lg px-2.5 py-1.5 text-sm ${!categorySlug ? 'bg-rose-50 font-bold text-rose-700' : 'text-plum-600 hover:bg-plum-50'}`}>
             All products
           </Link>
-          {CATEGORIES.map((c) => (
+          {activeCategories.map((c) => (
             <Link
               key={c.slug}
               to={`/category/${c.slug}`}
@@ -120,7 +123,7 @@ export default function Shop({ categorySlug: categorySlugProp }: { categorySlug?
           }}
         >
           <option value="">Jump to category…</option>
-          {CATEGORIES.map((c) => (
+          {activeCategories.map((c) => (
             <option key={c.slug} value={c.slug}>{c.name}</option>
           ))}
         </select>
@@ -261,6 +264,26 @@ export default function Shop({ categorySlug: categorySlugProp }: { categorySlug?
     </div>
   )
 
+  // Inactive category reached by direct URL: hide it gracefully, keep the data.
+  if (category && !categoryActive) {
+    return (
+      <PageTransition>
+        <div className="mx-auto max-w-7xl px-4 py-8 md:px-6">
+          <nav className="mb-3 flex items-center gap-1.5 text-xs text-plum-400" aria-label="Breadcrumb">
+            <Link to="/" className="hover:text-rose-600">Home</Link>
+            <span>/</span>
+            <Link to="/shop" className="hover:text-rose-600">Shop</Link>
+          </nav>
+          <EmptyState
+            title={`${category.name} is taking a break`}
+            subtitle="This collection isn't shown in the storefront right now — its products and details are still safe. Browse everything else in the meantime."
+            action={<Link to="/shop" className="btn-primary btn-md">Browse all gifts</Link>}
+          />
+        </div>
+      </PageTransition>
+    )
+  }
+
   return (
     <CategoryEntrance kind={category?.animation ?? 'sparkle'} title={category ? `Welcome to ${category.name}` : 'The full collection'}>
       <PageTransition>
@@ -282,7 +305,7 @@ export default function Shop({ categorySlug: categorySlugProp }: { categorySlug?
               <div>
                 <h1 className="heading-lg text-plum-900">{category ? category.name : 'All Gifts'}</h1>
                 <p className="mt-1 text-sm text-plum-500">
-                  {category ? category.description : 'Every gift in the Velvette atelier, in one place.'}
+                  {category ? category.description : 'Every gift in the MemoriesCatcher atelier, in one place.'}
                   {' '}· <strong className="text-plum-700">{filtered.length}</strong> {filtered.length === 1 ? 'gift' : 'gifts'}
                 </p>
               </div>

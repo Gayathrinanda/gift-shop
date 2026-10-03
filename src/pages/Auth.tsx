@@ -63,7 +63,7 @@ export default function AuthPage({ mode }: { mode: Mode }) {
 
   const titles = {
     signin: { h: 'Welcome back', s: 'Sign in to track orders, sync your wishlist and gift faster.' },
-    signup: { h: 'Create your account', s: 'Join Velvette — it takes 20 seconds and zero real money.' },
+    signup: { h: 'Create your account', s: 'Join MemoriesCatcher — it takes 20 seconds and zero real money.' },
     forgot: { h: 'Forgot password', s: 'Enter your email and we will pretend to send a reset link.' },
   }
 
@@ -74,7 +74,7 @@ export default function AuthPage({ mode }: { mode: Mode }) {
         <div className="hidden lg:block">
           <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-rose-600 via-rose-700 to-plum-900 p-10 text-white">
             <Flower2 size={220} className="absolute -bottom-10 -right-10 text-white/10" />
-            <p className="eyebrow text-gold-light">Velvette Gifting</p>
+            <p className="eyebrow text-gold-light">MemoriesCatcher Gifting</p>
             <h2 className="mt-3 font-display text-4xl font-bold leading-tight">
               Every order is a story someone will remember.
             </h2>

@@ -451,7 +451,7 @@ export function AdminAnalytics() {
 
 /* ————— Settings ————— */
 export function AdminSettings() {
-  const [store, setStore] = useState({ name: 'Velvette Gifting', email: 'care@velvette.shop', phone: '1800-VELVETTE', currency: 'INR ₹', freeAbove: '999' })
+  const [store, setStore] = useState({ name: 'MemoriesCatcher Gifting', email: 'care@velvette.shop', phone: '1800-MEMORIES', currency: 'INR ₹', freeAbove: '999' })
   const [notify, setNotify] = useState({ orders: true, stock: true, reviews: false, weekly: true })
   const [delivery, setDelivery] = useState({ sameDayCutoff: '18:00', expressFee: '149', metros: 'Mumbai, Delhi, Bengaluru, Hyderabad, Pune, Chennai, Kolkata' })
 

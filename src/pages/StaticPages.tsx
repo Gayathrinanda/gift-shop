@@ -8,7 +8,7 @@ function Shell({ title, sub, children }: { title: string; sub: string; children:
   return (
     <PageTransition>
       <div className="mx-auto max-w-3xl px-6 py-14">
-        <p className="eyebrow text-rose-600">Velvette</p>
+        <p className="eyebrow text-rose-600">MemoriesCatcher</p>
         <h1 className="heading-lg mt-1 text-plum-900">{title}</h1>
         <p className="mt-2 text-sm text-plum-500">{sub}</p>
         <div className="prose-velvette mt-8 space-y-6 text-sm leading-relaxed text-plum-600">{children}</div>
@@ -19,14 +19,14 @@ function Shell({ title, sub, children }: { title: string; sub: string; children:
 
 export function AboutPage() {
   return (
-    <Shell title="About Velvette" sub="An original concept gifting house — built as a frontend demo with love and no backend.">
+    <Shell title="About MemoriesCatcher" sub="An original concept gifting house — built as a frontend demo with love and no backend.">
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="card flex items-start gap-4 p-5">
           <Flower2 size={22} className="mt-0.5 flex-shrink-0 text-rose-600" />
           <div>
             <h3 className="font-display text-lg font-bold text-plum-900">Our story</h3>
             <p className="mt-1.5">
-              Velvette began as a florist’s New Year resolution: never let a gift feel like an errand. We arrange
+              MemoriesCatcher began as a florist’s New Year resolution: never let a gift feel like an errand. We arrange
               bouquets at dawn, source cakes from bakeries we personally annoy, and wrap every hamper like it is
               going to someone we owe an apology to.
             </p>
@@ -35,7 +35,7 @@ export function AboutPage() {
         <div className="card flex items-start gap-4 p-5">
           <ShieldCheck size={22} className="mt-0.5 flex-shrink-0 text-mint-deep" />
           <div>
-            <h3 className="font-display text-lg font-bold text-plum-900">The Velvette promise</h3>
+            <h3 className="font-display text-lg font-bold text-plum-900">The MemoriesCatcher promise</h3>
             <p className="mt-1.5">
               Fresh-cut flowers with a 2-day vase-life guarantee, cakes baked the morning they ship, and a human
               (demo) on the other end of every order.
@@ -63,7 +63,7 @@ export function AboutPage() {
         </div>
       </div>
       <p className="rounded-2xl bg-plum-50 p-4 text-xs text-plum-500">
-        Velvette is a fictional demo brand created for this frontend project. It is not affiliated with any real
+        MemoriesCatcher is a fictional demo brand created for this frontend project. It is not affiliated with any real
         retailer; all products, prices and reviews are demo data.
       </p>
     </Shell>
@@ -96,7 +96,7 @@ export function TermsPage() {
       <p><strong>Effective:</strong> September 2026 · Demo terms for a demo store.</p>
       <h3 className="font-display text-lg font-bold text-plum-900">1. The store is a demo</h3>
       <p>
-        Velvette is a frontend demonstration. No payments are processed, no orders are fulfilled, and no flowers
+        MemoriesCatcher is a frontend demonstration. No payments are processed, no orders are fulfilled, and no flowers
         will arrive at your door (sadly).
       </p>
       <h3 className="font-display text-lg font-bold text-plum-900">2. Demo accounts</h3>
@@ -112,7 +112,7 @@ export function TermsPage() {
 export function FaqPage() {
   const [open, setOpen] = useState<number | null>(0)
   const faqs = [
-    { q: 'Is this a real store?', a: 'No — Velvette is a fully functional frontend demo. Cart, checkout and orders all work against demo data in your browser.' },
+    { q: 'Is this a real store?', a: 'No — MemoriesCatcher is a fully functional frontend demo. Cart, checkout and orders all work against demo data in your browser.' },
     { q: 'How do demo coupons work?', a: 'Apply WELCOME10, GIFT20 or FIRSTORDER in the cart. They validate against minimum order values just like a real coupon engine (minus the money).' },
     { q: 'Where do the product images come from?', a: 'Demo photography is served from Unsplash. If an image ever fails to load, you will see a graceful placeholder instead of a broken page.' },
     { q: 'Will my cart survive a refresh?', a: 'Yes. Cart, wishlist, demo session and orders persist in localStorage and rehydrate on load.' },

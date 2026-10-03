@@ -4,15 +4,30 @@ import Modal from '../../components/ui/Modal'
 import SmartImage from '../../components/ui/SmartImage'
 import { useCatalog } from '../../store/products'
 import { CATEGORIES, CATEGORY_MAP } from '../../data/categories'
+import { useCategoryStatus } from '../../store/categoryStatus'
 import type { Category } from '../../data/types'
 import { toast } from '../../store/ui'
 
-/** Categories are static demo data; the admin view manages display order, status and subcategories. */
+/** Categories are static demo data; the admin view manages display order, Active/Inactive status and subcategories. */
 export default function AdminCategories() {
   const products = useCatalog((s) => s.products)
+  const { overrides, setStatus } = useCategoryStatus()
   const [order, setOrder] = useState<Category[]>(CATEGORIES)
   const [editing, setEditing] = useState<Category | null>(null)
   const [confirmDelete, setConfirmDelete] = useState<Category | null>(null)
+
+  const isActive = (c: Category) => overrides[c.slug] ?? c.active !== false
+
+  const toggleStatus = (c: Category) => {
+    const next = !isActive(c)
+    setStatus(c.slug, next)
+    toast.success(
+      `${c.name} is now ${next ? 'Active' : 'Inactive'}`,
+      next
+        ? 'It is visible in the customer category navigation again.'
+        : 'Hidden from customers — all of its data and products are preserved.',
+    )
+  }
 
   const counts = useMemo(() => {
     const m: Record<string, number> = {}
@@ -42,7 +57,7 @@ export default function AdminCategories() {
           <h1 className="heading-lg text-plum-900">Categories</h1>
           <p className="mt-1 text-sm text-plum-500">Demo catalog structure — edit names, subcategories and ordering.</p>
         </div>
-        <button onClick={() => setEditing({ id: '', slug: '' as Category['slug'], name: '', tagline: '', description: '', image: '', animation: 'sparkle', subcategories: [] } as unknown as Category)} className="btn-primary btn-sm">
+        <button onClick={() => setEditing({ id: '', slug: '' as Category['slug'], name: '', tagline: '', description: '', image: '', animation: 'sparkle', subcategories: [], active: true } as unknown as Category)} className="btn-primary btn-sm">
           <Plus size={14} /> Add category
         </button>
       </div>
@@ -54,6 +69,13 @@ export default function AdminCategories() {
               <SmartImage src={c.image} alt={c.name} className="h-full w-full" />
               <div className="absolute inset-0 bg-gradient-to-t from-plum-900/70 to-transparent" />
               <p className="absolute bottom-3 left-4 font-display text-lg font-bold text-white">{c.name}</p>
+              <span
+                className={`absolute left-3 top-3 rounded-full px-2.5 py-0.5 text-[11px] font-bold ${
+                  isActive(c) ? 'bg-rose-600 text-white' : 'bg-plum-900/80 text-cream/90'
+                }`}
+              >
+                {isActive(c) ? 'Active' : 'Inactive'}
+              </span>
               <span className="absolute right-3 top-3 rounded-full bg-white/90 px-2.5 py-0.5 text-[11px] font-bold text-plum-700">
                 {counts[c.slug] ?? 0} products
               </span>
@@ -63,6 +85,24 @@ export default function AdminCategories() {
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {c.subcategories.slice(0, 4).map((s) => <span key={s} className="chip text-[10px]">{s}</span>)}
                 {c.subcategories.length > 4 && <span className="chip text-[10px]">+{c.subcategories.length - 4} more</span>}
+              </div>
+              <div className="mt-3 flex items-center justify-between rounded-xl bg-plum-50 px-3 py-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-plum-400">Status</span>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={isActive(c)}
+                  aria-label={`${isActive(c) ? 'Deactivate' : 'Activate'} ${c.name}`}
+                  onClick={() => toggleStatus(c)}
+                  className={`flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-bold transition ${
+                    isActive(c)
+                      ? 'border-rose-600 bg-rose-600 text-white hover:bg-rose-700'
+                      : 'border-plum-200 bg-white text-plum-400 hover:border-plum-300 hover:text-plum-600'
+                  }`}
+                >
+                  <span className={`h-1.5 w-1.5 rounded-full ${isActive(c) ? 'bg-white' : 'bg-plum-300'}`} />
+                  {isActive(c) ? 'Active' : 'Inactive'}
+                </button>
               </div>
               <div className="mt-4 flex items-center justify-between border-t border-plum-100 pt-3">
                 <div className="flex gap-1">
@@ -86,6 +126,7 @@ export default function AdminCategories() {
             className="space-y-4"
             onSubmit={(e) => {
               e.preventDefault()
+              if (editing.slug) setStatus(editing.slug, editing.active !== false)
               toast.success('Category saved (demo)', 'In this demo, category edits persist in local state only.')
               setEditing(null)
             }}
@@ -108,7 +149,11 @@ export default function AdminCategories() {
             </div>
             <div>
               <label className="label">Status</label>
-              <select className="input">
+              <select
+                className="input"
+                value={editing.active !== false ? 'Active' : 'Inactive'}
+                onChange={(e) => setEditing({ ...editing, active: e.target.value === 'Active' })}
+              >
                 <option>Active</option><option>Inactive</option>
               </select>
             </div>

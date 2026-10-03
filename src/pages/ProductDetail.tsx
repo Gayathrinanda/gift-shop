@@ -19,6 +19,7 @@ import PageTransition from '../components/animations/PageTransition'
 import { useAddToCartFeedback } from '../components/animations/AddToCartAnimation'
 import { useWishlistFeedback } from '../components/animations/WishlistAnimation'
 import { CATEGORY_MAP } from '../data/categories'
+import { categoryLink } from '../store/categoryStatus'
 import { money, formatDate, discountPct, isValidPincode } from '../lib/utils'
 
 const TABS = ['Description', 'Highlights', 'Delivery & Care'] as const
@@ -128,7 +129,7 @@ export default function ProductDetail() {
         <nav className="mb-5 flex flex-wrap items-center gap-1.5 text-xs text-plum-400" aria-label="Breadcrumb">
           <Link to="/" className="hover:text-rose-600">Home</Link>
           <ChevronRight size={12} />
-          <Link to={`/category/${product.category}`} className="hover:text-rose-600">{cat?.name}</Link>
+          <Link to={categoryLink(product.category)} className="hover:text-rose-600">{cat?.name}</Link>
           <ChevronRight size={12} />
           <span className="font-semibold text-plum-600">{product.name}</span>
         </nav>

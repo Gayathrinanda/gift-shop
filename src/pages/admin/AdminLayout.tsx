@@ -61,9 +61,9 @@ export default function AdminLayout() {
         {/* sidebar */}
         <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col bg-plum-900 text-cream lg:flex">
           <div className="flex items-center gap-2.5 border-b border-white/10 px-5 py-4">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-600 font-display text-lg font-bold">V</span>
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-600 font-display text-lg font-bold">M</span>
             <div>
-              <p className="font-display font-bold leading-tight">Velvette</p>
+              <p className="font-display font-bold leading-tight">MemoriesCatcher</p>
               <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold-light">Admin console</p>
             </div>
           </div>
@@ -111,7 +111,7 @@ export default function AdminLayout() {
                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               >
                 <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
-                  <p className="font-display font-bold">Velvette Admin</p>
+                  <p className="font-display font-bold">MemoriesCatcher Admin</p>
                   <button onClick={() => setOpen(false)} aria-label="Close menu"><X size={18} /></button>
                 </div>
                 <nav className="flex-1 space-y-0.5 overflow-y-auto p-3">
@@ -182,7 +182,7 @@ export default function AdminLayout() {
           </main>
 
           <footer className="border-t border-plum-100 px-6 py-4 text-center text-xs text-plum-300">
-            Velvette demo admin · frontend-only state, resets when you clear browser storage
+            MemoriesCatcher demo admin · frontend-only state, resets when you clear browser storage
           </footer>
         </div>
       </div>

@@ -297,7 +297,7 @@ export default function Checkout() {
                       { id: 'upi', icon: Smartphone, title: 'UPI', sub: 'GPay, PhonePe, Paytm' },
                       { id: 'card', icon: CreditCard, title: 'Credit / Debit Card', sub: 'Visa, Mastercard, RuPay' },
                       { id: 'cod', icon: Banknote, title: 'Cash on Delivery', sub: 'Pay when it arrives' },
-                      { id: 'wallet', icon: Wallet, title: 'Wallet', sub: 'Velvette wallet balance' },
+                      { id: 'wallet', icon: Wallet, title: 'Wallet', sub: 'MemoriesCatcher wallet balance' },
                     ].map((m) => (
                       <button
                         key={m.id}

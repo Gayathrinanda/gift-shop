@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
-import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin, Send, Flower2 } from 'lucide-react'
+import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin, Send, Flower2, Camera } from 'lucide-react'
 import { useState } from 'react'
-import { CATEGORIES } from '../../data/categories'
+import { useActiveCategories } from '../../store/categoryStatus'
 import { toast } from '../../store/ui'
 
 export default function Footer() {
   const [email, setEmail] = useState('')
   const [done, setDone] = useState(false)
+  const activeCategories = useActiveCategories()
 
   const subscribe = (e: React.FormEvent) => {
     e.preventDefault()
@@ -29,7 +30,7 @@ export default function Footer() {
           </div>
           {done ? (
             <p className="flex items-center gap-2 rounded-full bg-white/10 px-5 py-3 text-sm font-semibold text-gold-light">
-              <Flower2 size={16} /> Welcome to the Velvette circle ✿
+              <Flower2 size={16} /> Welcome to the MemoriesCatcher circle ✿
             </p>
           ) : (
             <form onSubmit={subscribe} className="flex w-full max-w-md gap-2">
@@ -52,8 +53,12 @@ export default function Footer() {
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-12 md:grid-cols-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-600 font-display text-lg font-bold text-white">V</span>
-            <span className="font-display text-xl font-bold">Velvette</span>
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-600 text-white" aria-hidden>
+              <Camera size={18} strokeWidth={2.25} />
+            </span>
+            <span className="font-display text-xl font-bold">
+              Memories<span className="text-rose-400">Catcher</span>
+            </span>
           </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-cream/70">
             A premium gifting house for hand-tied flowers, artisan cakes and keepsakes — delivering feelings since 2025 (demo).
@@ -67,7 +72,7 @@ export default function Footer() {
             ].map(({ Icon, label }) => (
               <button
                 key={label}
-                aria-label={`Velvette on ${label} (demo link)`}
+                aria-label={`MemoriesCatcher on ${label} (demo link)`}
                 onClick={() => toast.info('Demo link', 'Social links are decorative in this demo.')}
                 className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-cream/80 transition hover:bg-rose-600 hover:text-white"
               >
@@ -80,7 +85,7 @@ export default function Footer() {
         <div>
           <p className="eyebrow mb-4 text-gold-light">Shop</p>
           <ul className="space-y-2.5 text-sm text-cream/75">
-            {CATEGORIES.slice(0, 8).map((c) => (
+            {activeCategories.map((c) => (
               <li key={c.slug}>
                 <Link to={`/category/${c.slug}`} className="transition hover:text-gold-light">
                   {c.name}
@@ -93,7 +98,7 @@ export default function Footer() {
         <div>
           <p className="eyebrow mb-4 text-gold-light">Company</p>
           <ul className="space-y-2.5 text-sm text-cream/75">
-            <li><Link to="/about" className="transition hover:text-gold-light">About Velvette</Link></li>
+            <li><Link to="/about" className="transition hover:text-gold-light">About MemoriesCatcher</Link></li>
             <li><Link to="/privacy" className="transition hover:text-gold-light">Privacy Policy</Link></li>
             <li><Link to="/terms" className="transition hover:text-gold-light">Terms & Conditions</Link></li>
             <li><Link to="/faq" className="transition hover:text-gold-light">FAQ</Link></li>
@@ -104,7 +109,7 @@ export default function Footer() {
         <div>
           <p className="eyebrow mb-4 text-gold-light">Support</p>
           <ul className="space-y-3 text-sm text-cream/75">
-            <li className="flex items-center gap-2.5"><Phone size={15} className="text-gold-light" /> 1800-VELVETTE (demo)</li>
+            <li className="flex items-center gap-2.5"><Phone size={15} className="text-gold-light" /> 1800-MEMORIES (demo)</li>
             <li className="flex items-center gap-2.5"><Mail size={15} className="text-gold-light" /> care@velvette.shop</li>
             <li className="flex items-center gap-2.5"><MapPin size={15} className="text-gold-light" /> 12 Rose Lane, Mumbai (demo)</li>
           </ul>
@@ -116,7 +121,7 @@ export default function Footer() {
 
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-6 py-5 text-xs text-cream/50 md:flex-row">
-          <p>© 2026 Velvette Gifting (demo). An original concept store — not affiliated with any real retailer.</p>
+          <p>© 2026 MemoriesCatcher Gifting (demo). An original concept store — not affiliated with any real retailer.</p>
           <p className="flex items-center gap-1.5">
             Crafted with <Flower2 size={12} className="text-rose-400" /> for gift lovers
           </p>

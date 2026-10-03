@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Lock, Mail, LogIn, ShieldCheck } from 'lucide-react'
 import { useAdminAuth } from '../../store/auth'
@@ -11,8 +11,12 @@ export default function AdminLogin() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
+  // Redirect (outside render) once we know an admin session exists.
+  useEffect(() => {
+    if (isAdmin) navigate('/admin/dashboard', { replace: true })
+  }, [isAdmin, navigate])
+
   if (isAdmin) {
-    navigate('/admin/dashboard')
     return null
   }
 
@@ -34,7 +38,7 @@ export default function AdminLogin() {
           <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gold text-plum-900 shadow-glow">
             <ShieldCheck size={26} />
           </span>
-          <h1 className="mt-4 font-display text-3xl font-bold text-cream">Velvette Admin</h1>
+          <h1 className="mt-4 font-display text-3xl font-bold text-cream">MemoriesCatcher Admin</h1>
           <p className="mt-1 text-sm text-cream/60">Demo console · no real store data</p>
         </div>
 
